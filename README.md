@@ -1,5 +1,5 @@
 - 👋 Hi, I’m @kanchana Jayalath Rathnayaka
-- 👀 I’m interested in Computer science
+- 👀 I’m interested in Cyber Security.
 - 🌱 I’m currently learning Computer Network
 - 💞️ I’m looking to collaborate with you. 
 - 📫 Send a msg to reach me 
