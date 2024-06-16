@@ -1,15 +1,12 @@
 name: Check Branch
 
 on:
-  pull_request:
-    branches:
-      - main
   push:
     branches:
       - main
 
 jobs:
-  check_branch:
+  branch_validation:
     runs-on: ubuntu-latest
     steps:
       - name: Check out the repository
@@ -20,3 +17,23 @@ jobs:
         run: |
           echo "ERROR: You can only merge to main from features."
           exit 1
+
+  deploy:
+    needs: branch_validation
+    name: Deploy to cinesync on stage branch push
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Rsync to cinesync
+        uses: burnett01/rsync-deployments@5.2.1
+        with:
+          switches: -avzr
+          path: .
+          remote_path: ${{ secrets.TARGET_DIR_STAGE }}
+          remote_host: ${{ secrets.HOST_DNS }}
+          remote_port: ${{ secrets.HOST_PORT }}
+          remote_user: ${{ secrets.USERNAME }}
+          remote_key: ${{ secrets.KEY }}
